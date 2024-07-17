@@ -50,4 +50,6 @@ task read_input_point_data(
       file_props[0].supersonic_outlet_points = file_props[0].supersonic_outlet_points + 1
     end
   end
+
+  cstdlib.fclose(file)
 end
