@@ -15,7 +15,7 @@ task main()
   var points = region(ispace(int1d, file_props[0].max_points), point)
 
   format.println("Reading grid from file")
-  read_input_point_data(params, points, file_props)
+  read_input_point_data(points, file_props)
   format.println("Finished reading grid from file")
 
 end
