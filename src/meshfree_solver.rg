@@ -4,6 +4,7 @@ require "file_properties"
 require "parameter"
 require "data_structure"
 require "point_preprocessor"
+require "initial_conditions"
 
 local format = require("std/format")
 
@@ -17,6 +18,10 @@ task main()
   format.println("Reading grid from file")
   read_input_point_data(points, file_props)
   format.println("Finished reading grid from file")
+  
+  format.println("Setting initial conditions")
+  initial_conditions(params, points, file_props)
+  format.println("Initial conditions set")
 
 end
 
