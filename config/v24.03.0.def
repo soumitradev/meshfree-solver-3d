@@ -1,0 +1,41 @@
+BootStrap: docker
+From: nvcr.io/nvidia/cuda:12.1.0-devel-ubuntu22.04
+
+%post
+   cd /
+   apt -y update
+   apt install -y build-essential cmake git wget nano python3 zlib1g-dev xxd
+
+   python3 --version
+
+   wget https://github.com/terralang/llvm-build/releases/download/llvm-13.0.0/clang+llvm-13.0.0-x86_64-linux-gnu.tar.xz
+   tar xf clang+llvm-13.0.0-x86_64-linux-gnu.tar.xz
+   export CMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH:$PWD/clang+llvm-13.0.0-x86_64-linux-gnu"
+   rm clang+llvm-13.0.0-x86_64-linux-gnu.tar.xz
+
+   git clone -b master https://github.com/StanfordLegion/legion.git
+   # Checkout latest release
+   cd legion
+   git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+   cd language
+   ./install.py --spy --debug --cuda --openmp -j8 --rdir=auto
+   chmod -R ugo+r /legion
+   chmod ugo+x ./regent.py
+
+%runscript
+   echo "LD_LIBRARY_PATH"
+   echo $LD_LIBRARY_PATH
+   echo "CPATH"
+   echo $CPATH
+   echo "PATH"
+   echo $PATH
+   echo "This container is only a base container that prepares the Regent runtime."
+   echo "This container does not use a default Regent runscript, to allow the user to override the runscript on the image to run their custom code."
+   echo "Please use apptainer exec to override the runscript and run your own Regent code. It is advised to bind mount your code and any other files it might need."
+   echo "The Legion code is cloned at /legion, and the regent executable can be found at /legion/language/regent.py"
+
+%environment
+   export LC_ALL=C
+
+%labels
+   Author soumitradev
