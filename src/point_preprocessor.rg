@@ -4,7 +4,6 @@ require "data_structure"
 require "file_properties"
 
 local cstdlib = regentlib.c
-local format = require("std/format")
 
 task read_input_point_data(
   params: parameters,
