@@ -3,6 +3,7 @@ import "regent"
 require "parameter"
 require "data_structure"
 require "file_properties"
+require "q_variables"
 
 local cstdlib = regentlib.c
 
@@ -12,7 +13,7 @@ task fpi_solver(
   file_props: region(ispace(int1d, 1), file_properties),
   t: int
 ) where reads writes (points, file_props) do
-  -- q_variables()
+  q_variables(points, file_props)
   -- q_derivatives()
   -- timestep_delt()
   -- flux_residual()
