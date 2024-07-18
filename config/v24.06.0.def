@@ -16,9 +16,9 @@ From: nvcr.io/nvidia/cuda:12.1.0-devel-ubuntu22.04
    git clone -b master https://github.com/StanfordLegion/legion.git
    # Checkout latest release
    cd legion
-   git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+   git checkout legion-24.06.0
    cd language
-   ./install.py --spy --debug --cuda --openmp -j8 --rdir=auto
+   ./install.py --cuda --openmp -j8
    chmod -R ugo+r /legion
    chmod ugo+x ./regent.py
 
