@@ -4,6 +4,7 @@ require "parameter"
 require "data_structure"
 require "file_properties"
 require "generate_split_stencils"
+require "fpi_solver"
 
 local format = require("std/format")
 local ctime = terralib.includec("time.h")
@@ -20,7 +21,7 @@ task q_lskum(
   generate_split_stencils(points, file_props)
 
   for t = 0, params.max_iters do
-    -- fpi_solver()
+    fpi_solver(params, points, file_props, t)
     format.println("{} {} {}", t + 1, file_props[0].res_new, file_props[0].residue)
     cstdlib.fprintf(
       file,
