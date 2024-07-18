@@ -2,3 +2,4 @@ slurm.*
 build/
 data/
 .vscode/
+out/
