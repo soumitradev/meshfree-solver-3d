@@ -6,11 +6,12 @@ require "parameter"
 
 local cstdlib = regentlib.c
 
+__demand(__inline)
 task initial_conditions(
   params: parameters,
   points: region(ispace(int1d), point),
   file_props: region(ispace(int1d, 1), file_properties)
-) where reads (file_props), reads writes (points) do
+) where reads (file_props.{max_points}), reads writes (points.{prim}) do
   if (params.initial_conditions_flag == 0) then
     for i = 0, file_props[0].max_points do
       points[i].prim[0] = params.rho_inf
