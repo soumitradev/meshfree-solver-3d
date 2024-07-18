@@ -32,6 +32,7 @@ struct parameters {
   initial_conditions_flag: int
 }
 
+__demand(__leaf)
 task init_params(): parameters
   var params: parameters
   params.max_iters =  50000
