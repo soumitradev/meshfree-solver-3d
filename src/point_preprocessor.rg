@@ -5,6 +5,7 @@ require "file_properties"
 
 local cstdlib = regentlib.c
 
+__demand(__leaf)
 task read_input_point_data(
   points: region(ispace(int1d), point),
   file_props: region(ispace(int1d, 1), file_properties)
