@@ -5,6 +5,7 @@ require "data_structure"
 require "file_properties"
 require "q_variables"
 require "q_derivatives"
+require "timestep_delt"
 
 local cstdlib = regentlib.c
 
@@ -16,7 +17,7 @@ task fpi_solver(
 ) where reads writes (points, file_props) do
   q_variables(points, file_props)
   q_derivatives(params, points, file_props)
-  -- timestep_delt()
+  timestep_delt(params, points)
   -- flux_residual()
   -- state_update()
 
