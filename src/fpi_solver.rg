@@ -7,6 +7,7 @@ require "q_variables"
 require "q_derivatives"
 require "timestep_delt"
 require "flux_residual"
+require "state_update"
 
 local cstdlib = regentlib.c
 
@@ -20,7 +21,7 @@ task fpi_solver(
   q_derivatives(params, points, file_props)
   timestep_delt(params, points)
   flux_residual(params, points)
-  -- state_update()
+  state_update(params, points, file_props)
 
   if (t <= 2) then
     file_props[0].res_old = file_props[0].res_new
