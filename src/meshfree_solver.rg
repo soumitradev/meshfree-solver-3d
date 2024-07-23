@@ -6,6 +6,7 @@ require "data_structure"
 require "point_preprocessor"
 require "initial_conditions"
 require "q_lskum"
+require "print_output"
 
 local format = require("std/format")
 
@@ -27,6 +28,10 @@ task main()
   format.println("Starting solver")
   q_lskum(params, points, file_props)
   format.println("Finished running solver for {} iterations", params.max_iters)
+
+  format.println("Writing output file and restart file")
+  print_output(points)
+  format.println("Finished writing output and restart files")
 end
 
 regentlib.saveobj(main, '/build/meshfree_solver_test.out', 'executable', nil, {'-lm'})
