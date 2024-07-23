@@ -8,6 +8,11 @@ require "wall_dgx_neg"
 require "wall_dgy_pos"
 require "wall_dgy_neg"
 require "wall_dgz_neg"
+require "outer_dgx_pos"
+require "outer_dgx_neg"
+require "outer_dgy_pos"
+require "outer_dgy_neg"
+require "outer_dgz_pos"
 
 local cstdlib = regentlib.c
 
@@ -34,6 +39,7 @@ do
   var Gyp: double[5]
   var Gyn: double[5]
   var Gzn: double[5]
+  var Gzp: double[5]
 
   for i in points do
     if (points[i].status == 0) then
@@ -48,6 +54,16 @@ do
           2 * points[i].delt * (Gxp[p] + Gxn[p] + Gyp[p] + Gyn[p] + Gzn[p])
       end
     elseif (points[i].status == 1) then
+      Gxp = outer_dgx_pos(params, points, i)
+      Gxn = outer_dgx_neg(params, points, i)
+      Gyp = outer_dgy_pos(params, points, i)
+      Gyn = outer_dgy_neg(params, points, i)
+      Gzp = outer_dgz_pos(params, points, i)
+
+      for p = 0, 5 do
+        points[i].flux_res[p] =
+          points[i].delt * (Gxp[p] + Gxn[p] + Gyp[p] + Gyn[p] + Gzp[p])
+      end
     elseif (points[i].status == 2) then
     end
   end
