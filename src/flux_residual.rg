@@ -13,6 +13,12 @@ require "outer_dgx_neg"
 require "outer_dgy_pos"
 require "outer_dgy_neg"
 require "outer_dgz_pos"
+require "interior_dgx_pos"
+require "interior_dgx_neg"
+require "interior_dgy_pos"
+require "interior_dgy_neg"
+require "interior_dgz_pos"
+require "interior_dgz_neg"
 
 local cstdlib = regentlib.c
 
@@ -29,6 +35,8 @@ reads (points.{
   xneg_nbhs, xneg_conn,
   ypos_nbhs, ypos_conn,
   yneg_nbhs, yneg_conn,
+  zpos_nbhs, zpos_conn,
+  zneg_nbhs, zneg_conn,
   nbhs, conn,
   status
 }),
@@ -65,6 +73,17 @@ do
           points[i].delt * (Gxp[p] + Gxn[p] + Gyp[p] + Gyn[p] + Gzp[p])
       end
     elseif (points[i].status == 2) then
+      Gxp = interior_dgx_pos(params, points, i)
+      Gxn = interior_dgx_neg(params, points, i)
+      Gyp = interior_dgy_pos(params, points, i)
+      Gyn = interior_dgy_neg(params, points, i)
+      Gzn = interior_dgz_neg(params, points, i)
+      Gzp = interior_dgz_pos(params, points, i)
+
+      for p = 0, 5 do
+        points[i].flux_res[p] =
+          points[i].delt * (Gxp[p] + Gxn[p] + Gyp[p] + Gyn[p] + Gzp[p] + Gzn[p])
+      end
     end
   end
 end
