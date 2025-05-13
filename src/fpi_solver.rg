@@ -10,6 +10,7 @@ require "flux_residual"
 require "state_update"
 
 local cstdlib = regentlib.c
+local format = require("std/format")
 
 task fpi_solver(
   params: parameters,
@@ -18,7 +19,9 @@ task fpi_solver(
   t: int
 ) where reads writes (points, file_props) do
   q_variables(points, file_props)
+  format.println("Finished q_variables for {}", t)  
   q_derivatives(params, points, file_props)
+  format.println("Finished q_derivatives for {}", t)  
   timestep_delt(params, points)
   flux_residual(params, points)
   state_update(params, points, file_props)
